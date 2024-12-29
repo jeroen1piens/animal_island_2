@@ -1,13 +1,20 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class Animal extends Organism {
-    public int chooseNextXPosition() {
+    public int chooseNextXCoordinate() {
         return ThreadLocalRandom.current().nextInt(getXCoordinate() - 1 >= 0 ? getXCoordinate() - 1 : getXCoordinate(), getXCoordinate() + 1 < getIsland().horizontalLength ? getXCoordinate() + 2 : getXCoordinate() + 1);
     }
-    public int chooseNextYPosition() {
+    public int chooseNextYCoordinate() {
         return ThreadLocalRandom.current().nextInt(getYCoordinate() - 1 >= 0 ? getYCoordinate() - 1 : getYCoordinate(), getYCoordinate() + 1 < getIsland().verticalLength ? getYCoordinate() + 2 : getYCoordinate() + 1);
     }
 
-
+    public void move(int tileCount) {
+        for (int i = 0; i < tileCount; i++) {
+            boolean successfull = changePosition(chooseNextXCoordinate(), chooseNextYCoordinate());
+            if (!successfull) {
+                tileCount--;
+            }
+        }
+    }
 
 }

@@ -16,8 +16,13 @@ public class Island {
             }
         }
     }
-    public boolean addOrganism(Organism organism, int xPosition, int yPosition) {
-        Tile tile = tilesGrid[yPosition][xPosition];
+
+    public Tile getTile(int xCoordinate, int yCoordinate) {
+        return tilesGrid[yCoordinate][xCoordinate];
+    }
+
+    public boolean addOrganism(Organism organism, int xCoordinate, int yCoordinate) {
+        Tile tile = getTile(xCoordinate, yCoordinate);
         synchronized (tile) {
             if (tile.isFull(organism)) {
                 return false;
@@ -40,11 +45,6 @@ public class Island {
     }
 
     public class Tile{
-        /*
-        public Map<Class<? extends Organism>, Set<Organism>> getOrganismMap() {
-            return organismMap;
-        }
-        */
 
         private Map<Class<? extends Organism>, Set<Organism>> organismMap = new HashMap<>();
         private static final Map<String, Integer> maxCapacityMap = new HashMap<>() {
@@ -55,6 +55,9 @@ public class Island {
         public Tile() {
         }
 
+        public Map<Class<? extends Organism>, Set<Organism>> getOrganismMap() {
+            return organismMap;
+        }
         public boolean isFull(Organism organism) {
             if(!organismMap.containsKey(organism.getClass())) {
                 return false;

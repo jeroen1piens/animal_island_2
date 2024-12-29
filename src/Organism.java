@@ -1,4 +1,4 @@
-public abstract class Organism {
+public abstract class Organism implements Runnable {
 
     private Island island;
     private int xCoordinate;
@@ -14,11 +14,21 @@ public abstract class Organism {
     public Island getIsland() {
         return island;
     }
-    public void setIsland(Island island) {
+
+    public boolean setInitialPosition(Island island, int newXCoordinate, int newYCoordinate) {
         this.island = island;
+        boolean successful = island.addOrganism(this, newXCoordinate, newYCoordinate);
+        if (successful) {
+            this.xCoordinate = newXCoordinate;
+            this.yCoordinate = newYCoordinate;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    public boolean setPosition(int newXCoordinate, int newYCoordinate) {
+    public boolean changePosition(int newXCoordinate, int newYCoordinate) {
         boolean successful = island.addOrganism(this, newXCoordinate, newYCoordinate);
         if (successful) {
             island.removeOrganism(this, this.xCoordinate, this.yCoordinate);

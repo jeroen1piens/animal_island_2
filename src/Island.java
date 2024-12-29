@@ -34,13 +34,9 @@ public class Island {
         }
     }
 
-    public void removeOrganism(Organism organism) {
-        Tile tile = tilesGrid[organism.getYCoordinate()][organism.getXCoordinate()];
+    public void removeOrganism(Organism organism, int xCoordinate, int yCoordinate) {
+        Tile tile = tilesGrid[yCoordinate][xCoordinate];
         tile.organismMap.get(organism.getClass()).remove(organism);
-    }
-
-    public Tile[][] getTilesGrid() {
-        return tilesGrid;
     }
 
     public class Tile{

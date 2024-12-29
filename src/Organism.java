@@ -14,22 +14,16 @@ public abstract class Organism {
     public Island getIsland() {
         return island;
     }
-    public void setXCoordinate(int xCoordinate) {
-        this.xCoordinate = xCoordinate;
-    }
-    public void setYCoordinate(int yCoordinate) {
-        this.yCoordinate = yCoordinate;
-    }
     public void setIsland(Island island) {
         this.island = island;
     }
 
-    public boolean setPosition(int x, int y) {
-        boolean successful = island.addOrganism(this, x, y);
+    public boolean setPosition(int newXCoordinate, int newYCoordinate) {
+        boolean successful = island.addOrganism(this, newXCoordinate, newYCoordinate);
         if (successful) {
-            island.removeOrganism(this);
-            this.setXCoordinate(x);
-            this.setYCoordinate(y);
+            island.removeOrganism(this, this.xCoordinate, this.yCoordinate);
+            this.xCoordinate = newXCoordinate;
+            this.yCoordinate = newYCoordinate;
             return true;
         }
         else {

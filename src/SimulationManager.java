@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class SimulationManager {
 
-    private OrganismFactory organismFactory;
+    private final OrganismFactory organismFactory;
     private final Island island;
 
     public SimulationManager() {
@@ -42,8 +42,7 @@ public class SimulationManager {
         for (Organism organism : organisms) {
             randomX = random.nextInt(0, island.horizontalLength);
             randomY = random.nextInt(0, island.verticalLength);
-            organism.setXCoordinate(randomX);
-            organism.setYCoordinate(randomY);
+            organism.setPosition(randomX, randomY);
             organism.setIsland(island);
             island.addOrganism(organism, organism.getXCoordinate(), organism.getYCoordinate());
         }

@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 public class Island {
@@ -33,7 +34,7 @@ public class Island {
                 return true;
             }
             else {
-                tile.organismMap.put(organism.getClass(), new HashSet<>());
+                tile.organismMap.put(organism.getClass(), ConcurrentHashMap.newKeySet());
                 tile.organismMap.get(organism.getClass()).add(organism);
                 return true;
             }
@@ -62,8 +63,8 @@ public class Island {
 
     public class Tile{
 
-        private Map<Class<? extends Organism>, Set<Organism>> organismMap = new HashMap<>();
-        private static final Map<String, Integer> maxCapacityMap = new HashMap<>() {
+        private Map<Class<? extends Organism>, Set<Organism>> organismMap = new ConcurrentHashMap<>();
+        private static final Map<String, Integer> maxCapacityMap = new ConcurrentHashMap<>() {
             {this.put("Plant", 100);
             this.put("Wolf", 5);}
         };

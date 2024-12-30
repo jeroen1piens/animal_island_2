@@ -1,20 +1,23 @@
 public class Wolf extends Animal {
 
-    public final int id;
-    private static int count = 0;
+    //public final int id;
+    //public int runCounter = 0;
+    //private static int count = 0;
 
     public Wolf() {
-        id = count;
-        count++;
+        //id = count;
+        //count++;
     }
 
 
     @Override
     public void run() {
         move(3);
+        /*
         if (id == 0) {
-            System.out.println(getClass().getSimpleName() + " " + this.hashCode() + ",(X:" + getXCoordinate()+ " , Y:" + getYCoordinate() + ")");
+            runCounter++;
+            System.out.println(getClass().getSimpleName() + " " + this.hashCode() + ",(X:" + getXCoordinate()+ " , Y:" + getYCoordinate() + ")" + " Run method activation : " + runCounter);
         }
-
+        */
     }
 }

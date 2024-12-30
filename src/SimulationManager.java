@@ -22,7 +22,6 @@ public class SimulationManager {
     public static void main(String[] args) {
         SimulationManager simulationManager = new SimulationManager();
         simulationManager.simulate(100);
-
     }
 
     public void scheduleNextTurn(Collection<Organism> organisms, ScheduledExecutorService scheduledExecutorService) {
@@ -36,8 +35,6 @@ public class SimulationManager {
             scheduledExecutorService = Executors.newScheduledThreadPool(3);
             scheduleNextTurn(island.retrieveAllOrganisms(), scheduledExecutorService);
             scheduledExecutorService.shutdown();
-            System.out.println(island.retrieveAllOrganisms());
-            System.out.println(island.retrieveAllOrganisms().size());
             while(!scheduledExecutorService.isTerminated()) {
                 try{
                     Thread.sleep(250);
@@ -46,6 +43,8 @@ public class SimulationManager {
                     e.printStackTrace();
                 }
             }
+            System.out.println(island.retrieveAllOrganisms());
+            System.out.println("Organisms count: " + island.retrieveAllOrganisms().size());
         }
     }
 

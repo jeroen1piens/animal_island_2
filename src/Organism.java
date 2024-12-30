@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Set;
+
 public abstract class Organism implements Runnable {
 
     private Island island;
@@ -34,6 +37,7 @@ public abstract class Organism implements Runnable {
         }
         boolean successful = island.addOrganism(this, newXCoordinate, newYCoordinate);
         if (successful) {
+            List<Organism> list = getIsland().retrieveAllOrganisms();
             island.removeOrganism(this, this.xCoordinate, this.yCoordinate);
             this.xCoordinate = newXCoordinate;
             this.yCoordinate = newYCoordinate;

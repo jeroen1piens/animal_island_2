@@ -11,12 +11,13 @@ public class SimulationManager {
     private final OrganismFactory organismFactory;
     private final Island island;
     private ScheduledExecutorService scheduledExecutorService;
+    private Analytics analytics;
 
     public SimulationManager() {
         organismFactory = new OrganismFactory();
         island = createIsland(10, 20);
         randomlySpreadOrganisms(createInitialOrganisms());
-
+        analytics = new Analytics();
     }
 
     public static void main(String[] args) {
@@ -45,6 +46,8 @@ public class SimulationManager {
             }
             System.out.println(island.retrieveAllOrganisms());
             System.out.println("Organisms count: " + island.retrieveAllOrganisms().size());
+            analytics.setAllOrganismsCollection(island.retrieveAllOrganisms());
+            System.out.println(analytics.getOrganismsCountMap());
         }
     }
 

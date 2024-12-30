@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executors;
@@ -15,32 +16,37 @@ public class SimulationManager {
         organismFactory = new OrganismFactory();
         island = createIsland(10, 20);
         randomlySpreadOrganisms(createInitialOrganisms());
-        scheduledExecutorService = Executors.newScheduledThreadPool(3);
+
     }
 
     public static void main(String[] args) {
         SimulationManager simulationManager = new SimulationManager();
-        List<Organism> organismList = new ArrayList<>();
-        for (int i = 0; i < simulationManager.island.verticalLength; i++) {
-            for (int j = 0; j < simulationManager.island.horizontalLength ; j++) {
-                Island.Tile tile = simulationManager.island.getTile(j, i);
-                for (Class<?> clazz : tile.getOrganismMap().keySet()) {
-                    for (Organism organism : tile.getOrganismMap().get(clazz)) {
-                        simulationManager.scheduledExecutorService.schedule(organism, 10, TimeUnit.MILLISECONDS);
-                    }
+        simulationManager.simulate(100);
+
+    }
+
+    public void scheduleNextTurn(Collection<Organism> organisms, ScheduledExecutorService scheduledExecutorService) {
+        for (Organism organism : organisms) {
+            scheduledExecutorService.schedule(organism, 10, TimeUnit.MILLISECONDS);
+        }
+    }
+
+    public void simulate(int turns) {
+        for (int i = 0; i < turns; i++) {
+            scheduledExecutorService = Executors.newScheduledThreadPool(3);
+            scheduleNextTurn(island.retrieveAllOrganisms(), scheduledExecutorService);
+            scheduledExecutorService.shutdown();
+            System.out.println(island.retrieveAllOrganisms());
+            System.out.println(island.retrieveAllOrganisms().size());
+            while(!scheduledExecutorService.isTerminated()) {
+                try{
+                    Thread.sleep(250);
                 }
-
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-        simulationManager.scheduledExecutorService.shutdown();
-        /*
-        for (int i = 0; i < simulationManager.island.getTilesGrid().length; i++) {
-            for (int j = 0; j < simulationManager.island.getTilesGrid()[0].length; j++) {
-                System.out.println(simulationManager.island.getTilesGrid()[i][j].getOrganismMap());
-            }
-        }
-        */
     }
 
     public Island createIsland(int horizontalLength, int verticalLength) {

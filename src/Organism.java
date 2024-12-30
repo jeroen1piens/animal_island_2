@@ -29,6 +29,9 @@ public abstract class Organism implements Runnable {
     }
 
     public boolean changePosition(int newXCoordinate, int newYCoordinate) {
+        if (this.xCoordinate == newXCoordinate && this.yCoordinate == newYCoordinate) {
+            return true;
+        }
         boolean successful = island.addOrganism(this, newXCoordinate, newYCoordinate);
         if (successful) {
             island.removeOrganism(this, this.xCoordinate, this.yCoordinate);

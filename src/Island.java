@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Island {
     private final Tile[][] tilesGrid;
@@ -42,6 +43,21 @@ public class Island {
     public void removeOrganism(Organism organism, int xCoordinate, int yCoordinate) {
         Tile tile = tilesGrid[yCoordinate][xCoordinate];
         tile.organismMap.get(organism.getClass()).remove(organism);
+    }
+
+    public List<Organism> retrieveAllOrganisms() {
+        List<Organism> organismList = new ArrayList<>();
+        for (int i = 0; i < verticalLength; i++) {
+            for (int j = 0; j < horizontalLength ; j++) {
+                Island.Tile tile = getTile(j, i);
+                for (Class<?> clazz : tile.getOrganismMap().keySet()) {
+                    for (Organism organism : tile.getOrganismMap().get(clazz)) {
+                        organismList.add(organism);
+                    }
+                }
+            }
+        }
+        return organismList;
     }
 
     public class Tile{

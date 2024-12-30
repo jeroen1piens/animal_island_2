@@ -10,7 +10,10 @@ public abstract class Animal extends Organism {
 
     public void move(int tileCount) {
         for (int i = 0; i < tileCount; i++) {
-            boolean successfull = changePosition(chooseNextXCoordinate(), chooseNextYCoordinate());
+            int nextXCoordinate = chooseNextXCoordinate();
+            int nextYCoordinate = chooseNextYCoordinate();
+            //System.out.println(this.hashCode() + ", next coordinates : " + ("X:" + nextXCoordinate + ",Y:" + nextYCoordinate));
+            boolean successfull = changePosition(nextXCoordinate, nextYCoordinate);
             if (!successfull) {
                 tileCount--;
             }
